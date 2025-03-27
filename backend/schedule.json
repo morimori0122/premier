@@ -1,0 +1,102 @@
+{
+  "Arsenal FC": {
+    "opponent": "Fulham FC",
+    "date": "2025-04-01T18:45:00",
+    "home_or_away": "home"
+  },
+  "Fulham FC": {
+    "opponent": "Arsenal FC",
+    "date": "2025-04-01T18:45:00",
+    "home_or_away": "away"
+  },
+  "Wolverhampton Wanderers FC": {
+    "opponent": "West Ham United FC",
+    "date": "2025-04-01T18:45:00",
+    "home_or_away": "home"
+  },
+  "West Ham United FC": {
+    "opponent": "Wolverhampton Wanderers FC",
+    "date": "2025-04-01T18:45:00",
+    "home_or_away": "away"
+  },
+  "Nottingham Forest FC": {
+    "opponent": "Manchester United FC",
+    "date": "2025-04-01T19:00:00",
+    "home_or_away": "home"
+  },
+  "Manchester United FC": {
+    "opponent": "Nottingham Forest FC",
+    "date": "2025-04-01T19:00:00",
+    "home_or_away": "away"
+  },
+  "AFC Bournemouth": {
+    "opponent": "Ipswich Town FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "home"
+  },
+  "Ipswich Town FC": {
+    "opponent": "AFC Bournemouth",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "away"
+  },
+  "Brighton & Hove Albion FC": {
+    "opponent": "Aston Villa FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "home"
+  },
+  "Aston Villa FC": {
+    "opponent": "Brighton & Hove Albion FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "away"
+  },
+  "Manchester City FC": {
+    "opponent": "Leicester City FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "home"
+  },
+  "Leicester City FC": {
+    "opponent": "Manchester City FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "away"
+  },
+  "Newcastle United FC": {
+    "opponent": "Brentford FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "home"
+  },
+  "Brentford FC": {
+    "opponent": "Newcastle United FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "away"
+  },
+  "Southampton FC": {
+    "opponent": "Crystal Palace FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "home"
+  },
+  "Crystal Palace FC": {
+    "opponent": "Southampton FC",
+    "date": "2025-04-02T18:45:00",
+    "home_or_away": "away"
+  },
+  "Liverpool FC": {
+    "opponent": "Everton FC",
+    "date": "2025-04-02T19:00:00",
+    "home_or_away": "home"
+  },
+  "Everton FC": {
+    "opponent": "Liverpool FC",
+    "date": "2025-04-02T19:00:00",
+    "home_or_away": "away"
+  },
+  "Chelsea FC": {
+    "opponent": "Tottenham Hotspur FC",
+    "date": "2025-04-03T19:00:00",
+    "home_or_away": "home"
+  },
+  "Tottenham Hotspur FC": {
+    "opponent": "Chelsea FC",
+    "date": "2025-04-03T19:00:00",
+    "home_or_away": "away"
+  }
+}
