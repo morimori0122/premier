@@ -44,26 +44,33 @@ name_map = {
     "Southampton Football Club": "Southampton",
     "Tottenham Hotspur Football Club": "Tottenham",
     "West Ham United Football Club": "West Ham",
-    "Wolverhampton Wanderers Football Club": "Wolves"
+    "Wolverhampton Wanderers Football Club": "Wolves",
 }
+
 
 @app.get("/")
 def root():
-    return {"message": "プレミアリーグ勝敗予測APIへようこそ！ POST /predict で予測できます。"}
+    return {
+        "message": "プレミアリーグ勝敗予測APIへようこそ！ POST /predict で予測できます。"
+    }
+
 
 @app.get("/teams")
 def get_teams():
     teams = [{"label": full, "value": name_map[full]} for full in name_map]
     return {"teams": teams}
 
+
 def get_team_features(df, team, role="home", n=5):
-    recent = df[df[f"{role}_club_name"] == team].sort_values("date", ascending=False).head(n)
+    recent = (
+        df[df[f"{role}_club_name"] == team].sort_values("date", ascending=False).head(n)
+    )
     if recent.empty:
         return {
             "club_position": 10,
             "recent_win_rate": 0.5,
             "total_minutes": 800,
-            "avg_minutes": 80.0
+            "avg_minutes": 80.0,
         }
     wins = recent["result_label"].apply(
         lambda r: 1 if r == f"{role}_win" else (0.5 if r == "draw" else 0)
@@ -72,8 +79,9 @@ def get_team_features(df, team, role="home", n=5):
         "club_position": int(recent[f"{role}_club_position"].iloc[0]),
         "recent_win_rate": wins.mean(),
         "total_minutes": 90 * n,
-        "avg_minutes": 90.0
+        "avg_minutes": 90.0,
     }
+
 
 def compute_past_match_score(df, home, away, n=3):
     history = []
@@ -90,8 +98,11 @@ def compute_past_match_score(df, home, away, n=3):
         return 1.0
     return np.mean(history[-n:])
 
+
 def get_team_form(df, team, role="home", n=5):
-    recent = df[df[f"{role}_club_name"] == team].sort_values("date", ascending=False).head(n)
+    recent = (
+        df[df[f"{role}_club_name"] == team].sort_values("date", ascending=False).head(n)
+    )
     form = []
     for _, row in recent.iterrows():
         if row["result_label"] == f"{role}_win":
@@ -101,6 +112,7 @@ def get_team_form(df, team, role="home", n=5):
         else:
             form.append("L")
     return form
+
 
 def generate_features(home: str, away: str):
     season_matches = matches[matches["season"] == 2024]
@@ -120,7 +132,7 @@ def generate_features(home: str, away: str):
         "away_avg_minutes": away_feat["avg_minutes"],
         "past_match_score": score,
         f"home_club_name_{home}": 1,
-        f"away_club_name_{away}": 1
+        f"away_club_name_{away}": 1,
     }
 
     home_form = get_team_form(season_matches, home, "home")
@@ -131,12 +143,14 @@ def generate_features(home: str, away: str):
         "home_rank": home_feat["club_position"],
         "away_rank": away_feat["club_position"],
         "home_form": home_form,
-        "away_form": away_form
+        "away_form": away_form,
     }
+
 
 @app.get("/features")
 def get_features(home: str = Query(...), away: str = Query(...)):
     return generate_features(home, away)
+
 
 @app.post("/predict")
 async def predict(request: Request):
@@ -155,9 +169,10 @@ async def predict(request: Request):
         "probabilities": {
             "away_win": round(float(probs[0]), 4),
             "draw": round(float(probs[1]), 4),
-            "home_win": round(float(probs[2]), 4)
-        }
+            "home_win": round(float(probs[2]), 4),
+        },
     }
+
 
 @app.get("/next_matches")
 def get_next_matches():
@@ -177,10 +192,6 @@ def get_next_matches():
             key = (home_fc, away_fc)
             if key not in added:
                 added.add(key)
-                matches.append({
-                    "home": home_fc,
-                    "away": away_fc,
-                    "date": info["date"]
-                })
+                matches.append({"home": home_fc, "away": away_fc, "date": info["date"]})
 
     return {"matches": matches}
