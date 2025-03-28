@@ -1,7 +1,11 @@
+from dotenv import load_dotenv
+import os
 import requests
 import json
 
-API_TOKEN = '249ddafcaa4445c689485f40f4667a66'
+load_dotenv()
+API_TOKEN = os.getenv("FOOTBALL_DATA_API_KEY")
+
 headers = {'X-Auth-Token': API_TOKEN}
 url = 'https://api.football-data.org/v4/competitions/PL/matches?status=SCHEDULED'
 
@@ -18,9 +22,7 @@ for match in data['matches']:
         "result": None
     })
 
-# 日付順にソート（任意）
 schedule.sort(key=lambda x: x['date'])
 
-# JSONに保存
 with open("backend/schedule.json", "w") as f:
     json.dump(schedule, f, indent=2)
