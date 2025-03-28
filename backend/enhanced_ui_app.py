@@ -196,11 +196,13 @@ def get_next_matches():
 
     simplified = []
     for m in matches:
-        simplified.append({
-            "home": name_map.get(m["home"], m["home"]),
-            "away": name_map.get(m["away"], m["away"]),
-            "date": m["date"],
-            "result": m["result"]
-        })
+        simplified.append(
+            {
+                "home": name_map.get(m["home"], m["home"]),
+                "away": name_map.get(m["away"], m["away"]),
+                "date": m["date"],
+                "result": m["result"],
+            }
+        )
 
     return {"matches": simplified, "matchday": target_matchday}
