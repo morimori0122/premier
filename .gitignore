@@ -28,3 +28,4 @@ archive/games.csv
 schedule.py
 
 .env
+key.env
