@@ -1,29 +1,48 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import MatchPredictor from "./MatchPredictor";
 import { getFullName } from "./utils/nameUtils";
 
-function MatchPredictorPage() {
-  const { slug } = useParams(); // ← 修正ポイント
-
-  const [home, away] = slug.split("-vs-").map((team) =>
-    getFullName(team.replace(/-/g, " "))
-  );
-
+const MatchPredictorPage = () => {
+  const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const result = location.state?.result;
+
+  const [homeSlug, awaySlug] = slug.split("-vs-");
+  const home = getFullName(homeSlug.replace(/-/g, " "));
+  const away = getFullName(awaySlug.replace(/-/g, " "));
 
   return (
-    <div>
+    <div className="p-4 w-full max-w-screen-lg mx-auto space-y-4">
       <button
-        className="text-blue-600 hover:underline mb-4"
         onClick={() => navigate(-1)}
+        className="text-blue-500 hover:underline"
       >
         ← Back to Schedule
       </button>
 
-      <MatchPredictor homeTeam={home} awayTeam={away} />
+      {result === null ? (
+        <MatchPredictor homeTeam={home} awayTeam={away} />
+      ) : (
+        <div className="bg-white p-6 rounded-xl shadow">
+          <h2 className="text-lg font-bold mb-4">
+            {home} (H) vs {away} (A)
+          </h2>
+          <p className="text-md">
+            result: {" "}
+            {result === "home_win"
+              ? "Home win"
+              : result === "draw"
+              ? "Draw"
+              : result === "away_win"
+              ? "Away win"
+              : "Unknown"}
+          </p>
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default MatchPredictorPage;

@@ -174,24 +174,33 @@ async def predict(request: Request):
     }
 
 
+# 逆マップ（略称 → 正式名称）も必要に応じて使えるようにする
+inverse_name_map = {v: k for k, v in name_map.items()}
+
+
 @app.get("/next_matches")
 def get_next_matches():
     with open("schedule.json", "r") as f:
-        raw_schedule = json.load(f)
+        schedule = json.load(f)
 
-    # 逆マッピングを作成
-    inverse_name_map = {v: k for k, v in name_map.items()}
+    # 未開催の中で一番早い matchday を見つける
+    for m in schedule:
+        if m["result"] is None:
+            target_matchday = m["matchday"]
+            break
+    else:
+        return {"matches": []}  # すべて終了していたら空
 
-    matches = []
-    added = set()
+    # その matchday に属する全試合を返す（開催済みも含む）
+    matches = [m for m in schedule if m["matchday"] == target_matchday]
 
-    for team, info in raw_schedule.items():
-        if info["home_or_away"] == "home":
-            home_fc = inverse_name_map.get(team, team)
-            away_fc = inverse_name_map.get(info["opponent"], info["opponent"])
-            key = (home_fc, away_fc)
-            if key not in added:
-                added.add(key)
-                matches.append({"home": home_fc, "away": away_fc, "date": info["date"]})
+    simplified = []
+    for m in matches:
+        simplified.append({
+            "home": name_map.get(m["home"], m["home"]),
+            "away": name_map.get(m["away"], m["away"]),
+            "date": m["date"],
+            "result": m["result"]
+        })
 
-    return {"matches": matches}
+    return {"matches": simplified, "matchday": target_matchday}
